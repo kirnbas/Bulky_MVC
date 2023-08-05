@@ -1,10 +1,10 @@
-﻿@model IEnumerable<Product>
+﻿
 
 <div class="card shadow border-0 my-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Product List</h2>
+                <h2 class="text-white py-2">Company List</h2>
             </div>
         </div>
     </div>
@@ -13,8 +13,8 @@
             <div class="col-6">
             </div>
             <div class="col-6 text-end">
-                <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Create New Product
+                <a asp-controller="Company" asp-action="Upsert" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Create New Company
                 </a>
             </div>
         </div>
@@ -23,19 +23,22 @@
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(p => p.Title)
+                        Name
                     </th>
                     <th>
-                        @Html.DisplayNameFor(p => p.ISBN)
+                        Street Address
                     </th>
                     <th>
-                        Price
+                        City
                     </th>
                     <th>
-                        @Html.DisplayNameFor(p => p.Author)
+                        State
                     </th>
                     <th>
-                        Category
+                        Postal Code
+                    </th>
+                    <th>
+                        Phone Number
                     </th>
                     <th></th>
                 </tr>
@@ -45,5 +48,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/product.js"></script>
+    <script src="~/js/company.js"></script>
 }

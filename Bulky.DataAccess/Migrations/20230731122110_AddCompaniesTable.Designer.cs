@@ -4,6 +4,7 @@ using BulkyBook.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230731122110_AddCompaniesTable")]
+    partial class AddCompaniesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,48 +96,6 @@ namespace BulkyBook.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "ZXCZXCZXC",
-                            Name = "ZXC",
-                            PhoneNumber = "ZXCZXCZXCZXCZXCZXC",
-                            PostalCode = "ZXCZXCZXCZXCZXC",
-                            State = "ZXCZXC",
-                            StreetAddress = "ZXCZXCZXCZXC"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "ZXCZXCZXC",
-                            Name = "NextCompany",
-                            PhoneNumber = "ZXCZXCZXCZXCZXCZXC",
-                            PostalCode = "ZXCZXCZXCZXCZXC",
-                            State = "ZXCZXC",
-                            StreetAddress = "ZXCZXCZXCZXC"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "ZXCZXCZXC",
-                            Name = "TrendCo",
-                            PhoneNumber = "ZXCZXCZXCZXCZXCZXC",
-                            PostalCode = "ZXCZXCZXCZXCZXC",
-                            State = "ZXCZXC",
-                            StreetAddress = "ZXCZXCZXCZXC"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            City = "ZXCZXCZXC",
-                            Name = "CoffeeCo",
-                            PhoneNumber = "ZXCZXCZXCZXCZXCZXC",
-                            PostalCode = "ZXCZXCZXCZXCZXC",
-                            State = "ZXCZXC",
-                            StreetAddress = "ZXCZXCZXCZXC"
-                        });
                 });
 
             modelBuilder.Entity("BulkyBook.Models.Product", b =>
@@ -487,10 +448,6 @@ namespace BulkyBook.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -503,8 +460,6 @@ namespace BulkyBook.DataAccess.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -569,17 +524,6 @@ namespace BulkyBook.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BulkyBook.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("BulkyBook.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

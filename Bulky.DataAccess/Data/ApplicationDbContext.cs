@@ -11,6 +11,10 @@ namespace BulkyBook.DataAccess.Data
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Company> Companies { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
             
@@ -110,6 +114,49 @@ namespace BulkyBook.DataAccess.Data
                     Price100 = 20,
                     CategoryId = 3,
                     ImageUrl = ""
+                }
+                );
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company
+                {
+                    Id = 1,
+                    Name = "ZXC",
+                    StreetAddress = "ZXCZXCZXCZXC",
+                    City = "ZXCZXCZXC",
+                    State = "ZXCZXC",
+                    PostalCode = "ZXCZXCZXCZXCZXC",
+                    PhoneNumber = "ZXCZXCZXCZXCZXCZXC"
+                },
+                new Company
+                {
+                    Id = 2,
+                    Name = "NextCompany",
+                    StreetAddress = "ZXCZXCZXCZXC",
+                    City = "ZXCZXCZXC",
+                    State = "ZXCZXC",
+                    PostalCode = "ZXCZXCZXCZXCZXC",
+                    PhoneNumber = "ZXCZXCZXCZXCZXCZXC"
+                },
+                new Company
+                {
+                    Id = 3,
+                    Name = "TrendCo",
+                    StreetAddress = "ZXCZXCZXCZXC",
+                    City = "ZXCZXCZXC",
+                    State = "ZXCZXC",
+                    PostalCode = "ZXCZXCZXCZXCZXC",
+                    PhoneNumber = "ZXCZXCZXCZXCZXCZXC"
+                },
+                new Company
+                {
+                    Id = 4,
+                    Name = "CoffeeCo",
+                    StreetAddress = "ZXCZXCZXCZXC",
+                    City = "ZXCZXCZXC",
+                    State = "ZXCZXC",
+                    PostalCode = "ZXCZXCZXCZXCZXC",
+                    PhoneNumber = "ZXCZXCZXCZXCZXCZXC"
                 }
                 );
         }
