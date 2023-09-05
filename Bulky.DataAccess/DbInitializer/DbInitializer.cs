@@ -60,7 +60,8 @@ namespace BulkyBook.DataAccess.DbInitializer
                     StreetAddress = "test 123 Ave",
                     State = "IL",
                     PostalCode = "23422",
-                    City = "Chicago"
+                    City = "Chicago",
+                    EmailConfirmed = true
                 }, "123Qw3#").GetAwaiter().GetResult();
 
                 ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(x => x.Email == "admin@bulky.test");
