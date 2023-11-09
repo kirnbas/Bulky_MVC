@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230814081509_addOrderHeaderAndDetailsToDb")]
-    partial class addOrderHeaderAndDetailsToDb
+    [Migration("20231102144505_removeImageUrl")]
+    partial class removeImageUrl
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0-preview.6.23329.4")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -204,8 +204,8 @@ namespace BulkyBook.DataAccess.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateOnly>("PaymentDueDate")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("PaymentDueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentIntentId")
                         .HasColumnType("nvarchar(max)");
@@ -219,6 +219,9 @@ namespace BulkyBook.DataAccess.Migrations
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ShippingDate")
@@ -265,10 +268,6 @@ namespace BulkyBook.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("ListPrice")
                         .HasColumnType("float");
 
@@ -299,7 +298,6 @@ namespace BulkyBook.DataAccess.Migrations
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "SWD9999001",
-                            ImageUrl = "",
                             ListPrice = 99.0,
                             Price = 90.0,
                             Price100 = 80.0,
@@ -313,7 +311,6 @@ namespace BulkyBook.DataAccess.Migrations
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "CAW777777701",
-                            ImageUrl = "",
                             ListPrice = 40.0,
                             Price = 30.0,
                             Price100 = 20.0,
@@ -327,7 +324,6 @@ namespace BulkyBook.DataAccess.Migrations
                             CategoryId = 1,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "RITO5555501",
-                            ImageUrl = "",
                             ListPrice = 55.0,
                             Price = 50.0,
                             Price100 = 35.0,
@@ -341,7 +337,6 @@ namespace BulkyBook.DataAccess.Migrations
                             CategoryId = 2,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "WS3333333301",
-                            ImageUrl = "",
                             ListPrice = 70.0,
                             Price = 65.0,
                             Price100 = 55.0,
@@ -355,7 +350,6 @@ namespace BulkyBook.DataAccess.Migrations
                             CategoryId = 2,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "SOTJ1111111101",
-                            ImageUrl = "",
                             ListPrice = 30.0,
                             Price = 27.0,
                             Price100 = 20.0,
@@ -369,7 +363,6 @@ namespace BulkyBook.DataAccess.Migrations
                             CategoryId = 3,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "FOT000000001",
-                            ImageUrl = "",
                             ListPrice = 25.0,
                             Price = 23.0,
                             Price100 = 20.0,
@@ -471,8 +464,7 @@ namespace BulkyBook.DataAccess.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasMaxLength(21)
-                        .HasColumnType("nvarchar(21)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -620,7 +612,6 @@ namespace BulkyBook.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CompanyId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -756,9 +747,7 @@ namespace BulkyBook.DataAccess.Migrations
                 {
                     b.HasOne("BulkyBook.Models.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
                 });

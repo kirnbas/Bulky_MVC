@@ -10,6 +10,7 @@
     <Content Remove="wwwroot\js\company.js" />
     <Content Remove="wwwroot\js\order.js" />
     <Content Remove="wwwroot\js\product.js" />
+    <Content Remove="wwwroot\js\user.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\user.js" />
     <None Include="wwwroot\js\company.js" />
     <None Include="wwwroot\js\order.js" />
     <None Include="wwwroot\js\product.js" />

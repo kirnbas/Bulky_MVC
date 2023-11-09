@@ -1,0 +1,80 @@
+﻿@model RoleManagementVM
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Manage User Role</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post">
+            <div class="border p-3 mt-4">
+                <input asp-for="User.Id" hidden />
+                <input asp-for="User.Name" hidden />
+                <div class="form-floating py-2 col-12">
+                    <input disabled asp-for="User.Name" class="form-control border-0 shadow" />
+                    <label class="ms-2">User</label>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <select required asp-for="User.Role" asp-items="Model.Roles" id="roleValue"
+                            class="form-select">
+                        <option disabled selected>--Select Role--</option>
+                    </select>
+                    <label class="ms-2">Role</label>
+                    <span asp-validation-for="User.Role" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12" id="companySelect">
+                    <select required asp-for="User.CompanyId" asp-items="Model.Companies"
+                            class="form-select">
+                        <option disabled selected>--Select Company--</option>
+                    </select>
+                    <label class="ms-2">Company</label>
+                    <span asp-validation-for="User.CompanyId" class="text-danger"></span>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="User" asp-action="Index" class="btn btn-secondary border form-control">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+        <script>
+            const roleValue = document.querySelector("#roleValue");
+            const companySelect = document.querySelector("#companySelect");
+
+            const RoleHandler = (target) => {
+                var text = target.options[target.selectedIndex].text;
+
+                if (text === '@SD.Role_Company') {
+                    companySelect.style.display = '';
+                }
+                else {
+                    companySelect.style.display = 'none';
+                }
+            }
+
+            RoleHandler(roleValue);
+            roleValue.addEventListener('change', (e) => RoleHandler(e.target));
+        </script>
+    }
+}
