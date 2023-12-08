@@ -48,7 +48,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             else
             {
                 //update
-                model.Product = unitOfWork.Product.Get(p => p.Id == id);
+                model.Product = unitOfWork.Product.Get(p => p.Id == id, includeProperties: "ProductImages");
             }
 
             return View(model);
@@ -150,6 +150,33 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         //    return RedirectToAction("Index");
         //}
 
+        public IActionResult DeleteImage(int imageId)
+        {
+            var imageToBeDeleted = unitOfWork.ProductImage.Get(x => x.Id == imageId);
+            int productId = imageToBeDeleted.ProductId;
+            if (imageToBeDeleted != null)
+            {
+                if (!string.IsNullOrEmpty(imageToBeDeleted.ImageUrl))
+                {
+                    var oldImagePath =
+                        Path.Combine(webHostEnvironment.WebRootPath,
+                        imageToBeDeleted.ImageUrl.TrimStart('\\'));
+
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                unitOfWork.ProductImage.Remove(imageToBeDeleted);
+                unitOfWork.Save();
+
+                TempData["success"] = "Deleted successfully";
+            }
+
+            return RedirectToAction(nameof(Upsert), new { id = productId });
+        }
+
         #region API CALLS
 
         [HttpGet]
@@ -169,15 +196,19 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            // delete the old image
-            //var oldImagePath =
-            //    Path.Combine(webHostEnvironment.WebRootPath, 
-            //    productToBeDeleted.ImageUrl.TrimStart('\\'));
+            string productPath = @"images\products\product-" + id;
+            string finalPath = Path.Combine(webHostEnvironment.WebRootPath, productPath);
 
-            //if (System.IO.File.Exists(oldImagePath))
-            //{
-            //    System.IO.File.Delete(oldImagePath);
-            //}
+            if (Directory.Exists(finalPath))
+            {
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
+                }
+
+                Directory.Delete(finalPath);
+            }
 
             unitOfWork.Product.Remove(productToBeDeleted);
             unitOfWork.Save();
